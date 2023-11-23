@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Visualization Dashboard</h1>
+<div id="plot"></div>
+<script>
+    var plot = {{ plot | safe }};
+    Plotly.newPlot('plot', plot.data, plot.layout);
+</script>
+{% endblock %}
