@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard de Datos</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4 text-center">Dashboard de Datos</h1>
+
+        <!-- Controles de filtro con estilos de Bootstrap -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="gender-filter">Género:</label>
+                <select id="gender-filter" class="form-control">
+                    <option value="">Todos</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="smoking-filter">Tabaquismo:</label>
+                <select id="smoking-filter" class="form-control">
+                    <option value="">Todos</option>
+                    <option value="Si">Sí</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="text-center mb-4">
+            <button onclick="updatePlots()" class="btn btn-primary">Actualizar Gráficos</button>
+        </div>
+
+        <!-- Contenedores para gráficos -->
+        <div class="row">
+            <div class="col-md-6">
+                <div id="age-distribution-plot" class="mb-4"></div>
+            </div>
+            <div class="col-md-6">
+                <div id="bmi-gender-plot" class="mb-4"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div id="blood-pressure-plot" class="mb-4"></div>
+            </div>
+            <div class="col-md-6">
+                <div id="smoking-prevalence-plot" class="mb-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getPlot(plotType, plotDivId) {
+            var gender = $('#gender-filter').val();
+            var smoking = $('#smoking-filter').val();
+
+            $.ajax({
+                url: '/get-plot/' + plotType,
+                data: { 'gender': gender, 'smoking': smoking },
+                success: function(plotJson) {
+                    var plotData = JSON.parse(plotJson);
+                    Plotly.newPlot(plotDivId, plotData.data, plotData.layout);
+                }
+            });
+        }
+
+        function updatePlots() {
+            getPlot('age_distribution', 'age-distribution-plot');
+            getPlot('bmi_gender', 'bmi-gender-plot');
+            getPlot('blood_pressure', 'blood-pressure-plot');
+            getPlot('smoking_prevalence', 'smoking-prevalence-plot');
+        }
+
+        // Inicializar gráficos al cargar la página
+        $(document).ready(function() {
+            updatePlots();
+        });
+    </script>
+</body>
+</html>
