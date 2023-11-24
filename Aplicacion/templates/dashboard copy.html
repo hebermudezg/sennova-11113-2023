@@ -1,88 +1,211 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Dashboard de Datos</title>
-    <!-- Incluir Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<meta charset="UTF-8">
+	<title>David Montiel</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+	
 </head>
 <body>
-    <div class="container">
-        <h1 class="my-4 text-center">Dashboard de Datos</h1>
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="menu">
+        <ion-icon name="menu-outline"></ion-icon>
+        <ion-icon name="close-outline"></ion-icon>
+    </div>
 
-        <!-- Controles de filtro con estilos de Bootstrap -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="gender-filter">Género:</label>
-                <select id="gender-filter" class="form-control">
-                    <option value="">Todos</option>
-                    <option value="M">Masculino</option>
-                    <option value="F">Femenino</option>
-                </select>
+    <div class="barra-lateral">
+        <div>
+            <div class="nombre-pagina">
+                <ion-icon id="cloud" name="cloud-outline"></ion-icon>
+                <span>David Montiel</span>
             </div>
+            <button class="boton">
+                <ion-icon name="add-outline"></ion-icon>
+                <span>Create new</span>
+            </button>
+        </div>
 
-            <div class="col-md-6">
-                <label for="smoking-filter">Tabaquismo:</label>
-                <select id="smoking-filter" class="form-control">
-                    <option value="">Todos</option>
-                    <option value="Si">Sí</option>
-                    <option value="No">No</option>
-                </select>
+        <nav class="navegacion">
+            <ul>
+                <li>
+                    <a id="inbox" href="#">
+                        <ion-icon name="mail-unread-outline"></ion-icon>
+                        <span>Inbox</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <ion-icon name="star-outline"></ion-icon>
+                        <span>Starred</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <ion-icon name="paper-plane-outline"></ion-icon>
+                        <span>Sent</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                        <span>Drafts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <ion-icon name="bookmark-outline"></ion-icon>
+                        <span>Important</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <ion-icon name="alert-circle-outline"></ion-icon>
+                        <span>Spam</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <ion-icon name="trash-outline"></ion-icon>
+                        <span>Trash</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div>
+            <div class="linea"></div>
+
+            <div class="modo-oscuro">
+                <div class="info">
+                    <ion-icon name="moon-outline"></ion-icon>
+                    <span>Drak Mode</span>
+                </div>
+                <div class="switch">
+                    <div class="base">
+                        <div class="circulo">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="usuario">
+                <img src="/Jhampier.jpg" alt="">
+                <div class="info-usuario">
+                    <div class="nombre-email">
+                        <span class="nombre">Jhampier</span>
+                        <span class="email">jhampier@gmail.com</span>
+                    </div>
+                    <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                </div>
             </div>
         </div>
 
-        <div class="text-center mb-4">
-            <button onclick="updatePlots()" class="btn btn-primary">Actualizar Gráficos</button>
+    </div>
+
+
+    <main>
+       
+<!--Contenido-->
+
+<title>Dashboard de Datos</title>
+<!-- Incluir Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4 text-center">Dashboard de Datos</h1>
+
+    <!-- Controles de filtro con estilos de Bootstrap -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="gender-filter">Género:</label>
+            <select id="gender-filter" class="form-control">
+                <option value="">Todos</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+            </select>
         </div>
 
-        <!-- Contenedores para gráficos -->
-        <div class="row">
-            <div class="col-md-6">
-                <div id="age-distribution-plot" class="mb-4"></div>
-            </div>
-            <div class="col-md-6">
-                <div id="bmi-gender-plot" class="mb-4"></div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div id="blood-pressure-plot" class="mb-4"></div>
-            </div>
-            <div class="col-md-6">
-                <div id="smoking-prevalence-plot" class="mb-4"></div>
-            </div>
+        <div class="col-md-6">
+            <label for="smoking-filter">Tabaquismo:</label>
+            <select id="smoking-filter" class="form-control">
+                <option value="">Todos</option>
+                <option value="Si">Sí</option>
+                <option value="No">No</option>
+            </select>
         </div>
     </div>
 
-    <script>
-        function getPlot(plotType, plotDivId) {
-            var gender = $('#gender-filter').val();
-            var smoking = $('#smoking-filter').val();
+    <div class="text-center mb-4">
+        <button onclick="updatePlots()" class="btn btn-primary">Actualizar Gráficos</button>
+    </div>
 
-            $.ajax({
-                url: '/get-plot/' + plotType,
-                data: { 'gender': gender, 'smoking': smoking },
-                success: function(plotJson) {
-                    var plotData = JSON.parse(plotJson);
-                    Plotly.newPlot(plotDivId, plotData.data, plotData.layout);
-                }
-            });
-        }
+    <!-- Contenedores para gráficos -->
+    <div class="row">
+        <div class="col-md-6">
+            <div id="age-distribution-plot" class="mb-4"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="bmi-gender-plot" class="mb-4"></div>
+        </div>
+    </div>
 
-        function updatePlots() {
-            getPlot('age_distribution', 'age-distribution-plot');
-            getPlot('bmi_gender', 'bmi-gender-plot');
-            getPlot('blood_pressure', 'blood-pressure-plot');
-            getPlot('smoking_prevalence', 'smoking-prevalence-plot');
-        }
+    <div class="row">
+        <div class="col-md-6">
+            <div id="blood-pressure-plot" class="mb-4"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="smoking-prevalence-plot" class="mb-4"></div>
+        </div>
+    </div>
+</div>
 
-        // Inicializar gráficos al cargar la página
-        $(document).ready(function() {
-            updatePlots();
+<script>
+    function getPlot(plotType, plotDivId) {
+        var gender = $('#gender-filter').val();
+        var smoking = $('#smoking-filter').val();
+
+        $.ajax({
+            url: '/get-plot/' + plotType,
+            data: { 'gender': gender, 'smoking': smoking },
+            success: function(plotJson) {
+                var plotData = JSON.parse(plotJson);
+                Plotly.newPlot(plotDivId, plotData.data, plotData.layout);
+            }
         });
-    </script>
+    }
+
+    function updatePlots() {
+        getPlot('age_distribution', 'age-distribution-plot');
+        getPlot('bmi_gender', 'bmi-gender-plot');
+        getPlot('blood_pressure', 'blood-pressure-plot');
+        getPlot('smoking_prevalence', 'smoking-prevalence-plot');
+    }
+
+    // Inicializar gráficos al cargar la página
+    $(document).ready(function() {
+        updatePlots();
+    });
+</script>
+</body>
+        
+    </main>
+
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>

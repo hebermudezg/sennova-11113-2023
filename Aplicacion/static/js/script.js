@@ -9,3 +9,7 @@ document.addEventListener('click', e => {
         $signUp.classList.toggle('active')
     }
 });
+
+
+
+
