@@ -1,20 +1,34 @@
-<div class="login">
-      <img src="../static/img/Foto-25-(1).png" alt="Logo" height="70px" class="logo">
-	<h1>¡Hola,bienvenido!</h1>
-    <link rel="stylesheet" href="../static/css/styles.css">
- <form method="post">
-  <table>
-    <tr>
-      <th>
-      <input type="text" name="u" placeholder="Username" required="required" />
-      </th> <th > <input type="password" name="p" placeholder="Password" required="required" /> </th> 
-    </tr>
-    <tr>
-
-    </tr>
-      </table>
-            <button type="submit" class="btn btn-primary btn-block btn-large" > 
-      Login </button>    
-    </form>
-    <script src="../static/js/script.js"></script>
-</div
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="login">
+        
+        <img src="{{ url_for('static', filename='img/sennova.png') }}" alt="Logo" height="100px" class="logo">
+        <br>
+        <br>
+        <h1>Bienvenido al Sistema de Alertas en Salud</h1>
+        <br>
+        <form action="{{ url_for('login') }}" method="post">
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" name="username" placeholder="Username" required="required" />
+                    </td>
+                    <td>
+                        <input type="password" name="password" placeholder="Password" required="required" />
+                    </td>
+                </tr>
+                <tr>
+                    <!-- Añade aquí otros elementos si son necesarios -->
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-primary btn-block btn-large">Iniciar Sesión</button>
+        </form>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </div>
+</body>
+</html>

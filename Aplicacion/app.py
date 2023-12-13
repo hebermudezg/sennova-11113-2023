@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, Markup
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 import plotly.express as px
 import pandas as pd
 import json
