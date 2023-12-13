@@ -1,16 +1,87 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Alerts</title>
-    <!-- Add Bootstrap or other styling links here -->
+    <!-- Incluir Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Incluir FontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+
+    <!-- Otros enlaces de estilo si son necesarios -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
+
 <body>
-    <h1>Alerts</h1>
-    <form action="" method="post" enctype="multipart/form-data">
-        <input type="file" name="datafile">
-        <input type="submit" value="Upload and Predict">
-        <link rel="stylesheet" href="style.css">
-    </form>
-    <!-- Placeholder for prediction results -->
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <!-- Menú lateral -->
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <br>
+                    <a href="/"
+                        class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <!-- Imagen del logo -->
+                        <img src="{{ url_for('static', filename='img/sennova.png') }}" alt="Logo" height="60px"
+                            class="logo">
+                    </a>
+                    <br>
+                    <br>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
+                        <!-- Elementos del menú -->
+                        <li class="nav-item">
+                            <a href="/dashboard" class="nav-link align-middle px-0">
+                                <i class="fas fa-home"></i> <span class="ms-1 d-none d-sm-inline">Inicio</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/dashboard" class="nav-link align-middle px-0">
+                                <i class="fas fa-tachometer-alt"></i> <span
+                                    class="ms-1 d-none d-sm-inline">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://public-files-hebermudezg.s3.amazonaws.com/Manual+de+usuario.pdf"
+                                class="nav-link align-middle px-0" target="_blank">
+                                <i class="fas fa-book"></i> <span class="ms-1 d-none d-sm-inline">Documentación</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/alerts" class="nav-link align-middle px-0">
+                                <i class="fas fa-bell"></i> <span class="ms-1 d-none d-sm-inline">Alertas</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link align-middle px-0">
+                                <i class="fas fa-sign-out-alt"></i> <span class="ms-1 d-none d-sm-inline">Salir</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contenido principal de Alerts -->
+            <div class="col py-3">
+                <h1>Alerts</h1>
+                <!-- Formulario modificado con botón de carga de archivos personalizado y botón de envío en español -->
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div class="file-upload btn btn-primary">
+                        <span>Seleccionar archivo</span>
+                        <input type="file" name="datafile" class="file-input">
+                    </div>
+                    <input type="submit" value="Cargar y Predecir" class="btn btn-success">
+                </form>
+
+                <!-- Contenedor para el DataFrame (si lo necesitas) -->
+                {% if table_html %}
+                <div class="dataframe-container">
+                    {{ table_html|safe }}
+                </div>
+                {% endif %}
+
+            </div>
+            <!-- ... -->
 </body>
+
 </html>

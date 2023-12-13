@@ -1,3 +1,4 @@
+# Importing libraries 
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 import plotly.express as px
 import pandas as pd
@@ -7,9 +8,6 @@ import joblib
 from flask import request
 from werkzeug.utils import secure_filename
 import os
-
-
-
 
 
 app = Flask(__name__)
@@ -96,16 +94,20 @@ def get_plot(plot_type):
 
 @app.route('/alerts', methods=['GET', 'POST'])
 def alerts():
+    table_html = None
     if request.method == 'POST':
-        file = request.files.get('file')
+        file = request.files.get('datafile')
         if file and file.filename.endswith('.csv'):
             filename = secure_filename(file.filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
-            return redirect(url_for('predict', filename=filename))
-        else:
-            flash('Invalid file type or no file selected.')
-    return render_template('alerts.html')
+
+            # Convertir el DataFrame a HTML
+            df = pd.read_csv(filepath)
+            table_html = df.head().to_html(classes='table table-bordered', index=False)
+
+    return render_template('alerts.html', table_html=table_html)
+
 
 
 @app.route('/predict/<filename>')
