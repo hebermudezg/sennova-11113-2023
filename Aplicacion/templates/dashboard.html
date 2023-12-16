@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Dashboard de Datos</title>
     <!-- Incluir Bootstrap CSS -->
@@ -10,6 +11,7 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row flex-nowrap">
@@ -17,13 +19,16 @@
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <br>
-                    <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <a href="/"
+                        class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <!-- Imagen del logo -->
-                        <img src="{{ url_for('static', filename='img/sennova.png') }}" alt="Logo" height="60px" class="logo">
+                        <img src="{{ url_for('static', filename='img/sennova.png') }}" alt="Logo" height="60px"
+                            class="logo">
                     </a>
                     <br>
                     <br>
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
                         <!-- Elementos del menú -->
                         <li class="nav-item">
                             <a href="/dashboard" class="nav-link align-middle px-0">
@@ -32,11 +37,13 @@
                         </li>
                         <li class="nav-item">
                             <a href="/dashboard" class="nav-link align-middle px-0">
-                                <i class="fas fa-tachometer-alt"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                                <i class="fas fa-tachometer-alt"></i> <span
+                                    class="ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://public-files-hebermudezg.s3.amazonaws.com/Manual+de+usuario.pdf" class="nav-link align-middle px-0" target="_blank">
+                            <a href="https://public-files-hebermudezg.s3.amazonaws.com/Manual+de+usuario.pdf"
+                                class="nav-link align-middle px-0" target="_blank">
                                 <i class="fas fa-book"></i> <span class="ms-1 d-none d-sm-inline">Documentación</span>
                             </a>
                         </li>
@@ -45,15 +52,15 @@
                                 <i class="fas fa-bell"></i> <span class="ms-1 d-none d-sm-inline">Alertas</span>
                             </a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a href="/login" class="nav-link align-middle px-0">
                                 <i class="fas fa-sign-out-alt"></i> <span class="ms-1 d-none d-sm-inline">Salir</span>
-                            </a>                            
+                            </a>
                         </li>
 
                     </ul>
-                    
+
                 </div>
             </div>
 
@@ -61,6 +68,12 @@
             <!-- Contenido principal de tu Dashboard -->
             <div class="col py-3">
                 <h1 class="my-4 text-center">Dashboard de Datos</h1>
+                <p style="text-align: justify;">
+                    Bienvenido al Dashboard para el Manejo de Alertas en Salud. Este espacio está dedicado a proporcionar análisis gráficos detallados y perspectivas valiosas sobre diversos aspectos relacionados con la salud y el bienestar. Aquí, encontrarás una serie de visualizaciones que te permitirán explorar y comprender mejor las dinámicas de importantes indicadores de salud, como la distribución de edad, la presión arterial, el índice de masa corporal, entre otros. 
+                    <br><br>
+                    Estas herramientas están diseñadas para ayudarte a identificar tendencias, patrones y posibles áreas de preocupación en los datos de salud. Con una interfaz intuitiva y datos actualizados, nuestro dashboard es una herramienta esencial para profesionales de la salud, investigadores y cualquier persona interesada en el análisis de datos de salud. Navega a través de los diferentes gráficos, filtra la información según tus necesidades y obtén insights que pueden ser cruciales para la toma de decisiones informadas en el ámbito de la salud.
+                </p>
+
 
                 <!-- Controles de filtro con estilos de Bootstrap -->
                 <div class="row mb-3">
@@ -87,7 +100,7 @@
                     <button onclick="updatePlots()" class="btn btn-primary">Actualizar Gráficos</button>
                 </div>
 
-                <!-- Contenedores para gráficos -->
+                <!-- Contenedores para gráficos existentes -->
                 <div class="row">
                     <div class="col-md-6">
                         <div id="age-distribution-plot" class="mb-4"></div>
@@ -105,6 +118,48 @@
                         <div id="smoking-prevalence-plot" class="mb-4"></div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="age_gender_distribution_plot" class="mb-4"></div>
+                    </div>
+                </div>
+
+                <!-- Contenedores para los nuevos gráficos -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="bp-comparison-plot" class="mb-4"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="bmi-comparison-plot" class="mb-4"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="age-waist-plot" class="mb-4"></div>
+                    </div>
+                </div>
+                <!-- Contenedores para los nuevos gráficos -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="age_distribution_by_disease_plot" class="mb-4"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="bp_by_disease_plot" class="mb-4"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="bmi_vs_disease_plot" class="mb-4"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="smoking_prevalence_by_disease_plot" class="mb-4"></div>
+                    </div>
+                </div>
+                
+
             </div>
         </div>
     </div>
@@ -117,7 +172,7 @@
             $.ajax({
                 url: '/get-plot/' + plotType,
                 data: { 'gender': gender, 'smoking': smoking },
-                success: function(plotJson) {
+                success: function (plotJson) {
                     var plotData = JSON.parse(plotJson);
                     Plotly.newPlot(plotDivId, plotData.data, plotData.layout);
                 }
@@ -129,12 +184,19 @@
             getPlot('bmi_gender', 'bmi-gender-plot');
             getPlot('blood_pressure', 'blood-pressure-plot');
             getPlot('smoking_prevalence', 'smoking-prevalence-plot');
+            getPlot('age_gender_distribution', 'age_gender_distribution_plot');
+            getPlot('age_distribution_by_disease', 'age_distribution_by_disease_plot');
+            getPlot('bp_by_disease', 'bp_by_disease_plot');
+            getPlot('bmi_vs_disease', 'bmi_vs_disease_plot');
+            getPlot('smoking_prevalence_by_disease', 'smoking_prevalence_by_disease_plot');
         }
 
+
         // Inicializar gráficos al cargar la página
-        $(document).ready(function() {
+        $(document).ready(function () {
             updatePlots();
         });
     </script>
 </body>
+
 </html>

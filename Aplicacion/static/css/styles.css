@@ -575,3 +575,13 @@ position: absolute right: 0 bottom: 100% width: 32px height: 32px border-radius:
   opacity: 0;
   filter: alpha(opacity=0);
 }
+
+
+.plot-container {
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 15px;
+  background-color: white;
+  margin-bottom: 20px;
+}

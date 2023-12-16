@@ -1,0 +1,11 @@
+.plot-container {
+    min-height: 400px; /* Altura mínima para asegurarse de que el gráfico no se vea demasiado pequeño */
+    height: auto; /* Altura automática para permitir que el contenedor crezca con el contenido */
+    max-width: 130%; /* Ancho máximo para asegurarse de que el contenedor no se extienda demasiado */
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 15px;
+    background-color: white;
+    margin-bottom: 20px;
+}
