@@ -7,9 +7,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- Incluir FontAwesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body>
@@ -25,8 +30,7 @@
                         <img src="{{ url_for('static', filename='img/sennova.png') }}" alt="Logo" height="60px"
                             class="logo">
                     </a>
-                    <br>
-                    <br>
+                    <br><br>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="menu">
                         <!-- Elementos del menú -->
@@ -41,37 +45,46 @@
                                     class="ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="https://public-files-hebermudezg.s3.amazonaws.com/Manual+de+usuario.pdf"
-                                class="nav-link align-middle px-0" target="_blank">
+
+                        <!-- Menú desplegable de Documentación -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle align-middle px-0" href="#" id="navbarDropdownMenuLink"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-book"></i> <span class="ms-1 d-none d-sm-inline">Documentación</span>
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="https://public-files-hebermudezg.s3.amazonaws.com/Manual+de+usuario.pdf" target="_blank"><i
+                                            class="fas fa-file-alt"></i> Manual de ususario</a></li>
+                                <li><a class="dropdown-item" href="https://public-files-hebermudezg.s3.amazonaws.com/Entregable_5+Informe+de+modelos.pdf" target="_blank"><i
+                                            class="fas fa-file-alt"></i> Informe del modelo de ML</a></li>
+                            </ul>
                         </li>
+
                         <li class="nav-item">
                             <a href="/alerts" class="nav-link align-middle px-0">
                                 <i class="fas fa-bell"></i> <span class="ms-1 d-none d-sm-inline">Alertas</span>
                             </a>
                         </li>
-
                         <li class="nav-item">
                             <a href="/login" class="nav-link align-middle px-0">
                                 <i class="fas fa-sign-out-alt"></i> <span class="ms-1 d-none d-sm-inline">Salir</span>
                             </a>
                         </li>
-
                     </ul>
-
                 </div>
             </div>
+
 
 
             <!-- Contenido principal de tu Dashboard -->
             <div class="col py-3">
                 <h1 class="my-4 text-center">Dashboard de Datos</h1>
                 <p style="text-align: justify;">
-                    Bienvenido al Dashboard para el Manejo de Alertas en Salud. Este espacio está dedicado a proporcionar análisis gráficos detallados y perspectivas valiosas sobre diversos aspectos relacionados con la salud y el bienestar. Aquí, encontrarás una serie de visualizaciones que te permitirán explorar y comprender mejor las dinámicas de importantes indicadores de salud, como la distribución de edad, la presión arterial, el índice de masa corporal, entre otros. 
-                    <br><br>
-                    Estas herramientas están diseñadas para ayudarte a identificar tendencias, patrones y posibles áreas de preocupación en los datos de salud. Con una interfaz intuitiva y datos actualizados, nuestro dashboard es una herramienta esencial para profesionales de la salud, investigadores y cualquier persona interesada en el análisis de datos de salud. Navega a través de los diferentes gráficos, filtra la información según tus necesidades y obtén insights que pueden ser cruciales para la toma de decisiones informadas en el ámbito de la salud.
+                    Bienvenido al Dashboard para el Manejo de Alertas en Salud. Este espacio está dedicado a
+                    proporcionar análisis gráficos detallados y perspectivas valiosas sobre diversos aspectos
+                    relacionados con la salud y el bienestar. Aquí, encontrarás una serie de visualizaciones que te
+                    permitirán explorar y comprender mejor las dinámicas de importantes indicadores de salud, como la
+                    distribución de edad, la presión arterial, el índice de masa corporal, entre otros.
                 </p>
 
 
@@ -158,7 +171,7 @@
                         <div id="smoking_prevalence_by_disease_plot" class="mb-4"></div>
                     </div>
                 </div>
-                
+
 
             </div>
         </div>
