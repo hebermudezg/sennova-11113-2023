@@ -49,10 +49,13 @@
                                 <i class="fas fa-book"></i> <span class="ms-1 d-none d-sm-inline">Documentación</span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="https://public-files-hebermudezg.s3.amazonaws.com/Manual+de+usuario.pdf" target="_blank"><i
-                                            class="fas fa-file-alt"></i> Manual de ususario</a></li>
-                                <li><a class="dropdown-item" href="https://public-files-hebermudezg.s3.amazonaws.com/Entregable_5+Informe+de+modelos.pdf" target="_blank"><i
-                                            class="fas fa-file-alt"></i> Informe del modelo de ML</a></li>
+                                <li><a class="dropdown-item"
+                                        href="https://public-files-hebermudezg.s3.amazonaws.com/Manual+de+usuario.pdf"
+                                        target="_blank"><i class="fas fa-file-alt"></i> Manual de ususario</a></li>
+                                <li><a class="dropdown-item"
+                                        href="https://public-files-hebermudezg.s3.amazonaws.com/Entregable_5+Informe+de+modelos.pdf"
+                                        target="_blank"><i class="fas fa-file-alt"></i> Informe del modelo de ML</a>
+                                </li>
                             </ul>
                         </li>
 
@@ -74,23 +77,46 @@
             <div class="col py-3">
                 <h1>Alerts</h1>
                 <!-- Formulario modificado con botón de carga de archivos personalizado y botón de envío en español -->
-                <form action="" method="post" enctype="multipart/form-data">
+                <!-- En tu archivo alerts.html -->
+                <form action="{{ url_for('alerts') }}" method="post" enctype="multipart/form-data">
                     <div class="file-upload btn btn-primary">
                         <span>Seleccionar archivo</span>
                         <input type="file" name="datafile" class="file-input">
                     </div>
-                    <input type="submit" value="Cargar y Predecir" class="btn btn-success">
+                    <!-- Menú desplegable para seleccionar nivel de riesgo -->
+                    <div class="mb-3">
+                        <label for="riskLevel" class="form-label">Nivel de Riesgo</label>
+                        <select class="form-control" id="riskLevel" name="riskLevel">
+                            <option value="all">Todos</option>
+                            <option value="low">Bajo (0 - 0.33)</option>
+                            <option value="medium">Medio (0.33 - 0.66)</option>
+                            <option value="high">Alto (0.66 - 1)</option>
+                        </select>
+                    </div>
+                    <input type="submit" value="Cargar y Clasificar" class="btn btn-success">
                 </form>
 
+
+
+
                 <!-- Contenedor para el DataFrame (si lo necesitas) -->
-                {% if table_html %}
+                <!-- Contenedor para el DataFrame de alto riesgo -->
+                {% if high_risk_table_html %}
                 <div class="dataframe-container">
-                    {{ table_html|safe }}
+                    {{ high_risk_table_html|safe }}
                 </div>
                 {% endif %}
 
+
+
             </div>
             <!-- ... -->
+
+
+
+
+
+
 </body>
 
 </html>

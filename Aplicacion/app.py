@@ -8,16 +8,38 @@ import joblib
 from flask import request
 from werkzeug.utils import secure_filename
 import os
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import OneHotEncoder
+
+
+
 
 
 app = Flask(__name__)
+
+
+# Configuración del preprocesador
+categorical_cols = ['VRXSEXO', 'TABAQUISMO']
+numerical_cols = ['NPASS', 'NPADS', 'NIMC', 'NCINTURA', 'AGE']
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', StandardScaler(), numerical_cols),
+        ('cat', OneHotEncoder(), categorical_cols)
+    ])
+
+logistic_model = joblib.load('models/logistic_model.joblib')
+# Cargar el preprocessor ajustado
+preprocessor = joblib.load('models/preprocessor.joblib')
+
+
+
 app.secret_key = 'your_secret_key'  # Reemplaza con una clave secreta real
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
 
-# Carga de los modelos previamente entrenados
-#logistic_model = joblib.load('models/logistic_model.joblib')
-#random_forest_model = joblib.load('models/random_forest_model.joblib')
+
 
 # Asegurar que la carpeta de subidas exista
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -284,42 +306,61 @@ def get_plot(plot_type):
 
 @app.route('/alerts', methods=['GET', 'POST'])
 def alerts():
-    table_html = None
+    high_risk_table_html = None
     if request.method == 'POST':
         file = request.files.get('datafile')
+        risk_level = request.form.get('riskLevel', 'all')
+
         if file and file.filename.endswith('.csv'):
             filename = secure_filename(file.filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
 
-            # Convertir el DataFrame a HTML
             df = pd.read_csv(filepath)
-            table_html = df.head().to_html(classes='table table-bordered', index=False)
+            df_preprocessed = preprocessor.transform(df)
+            probabilities = logistic_model.predict_proba(df_preprocessed)
+            df['Risk_Probability'] = probabilities[:, 1]
 
-    return render_template('alerts.html', table_html=table_html)
+            # Filtrar según el nivel de riesgo seleccionado
+            if risk_level != 'all':
+                if risk_level == 'low':
+                    df = df[df['Risk_Probability'] < 0.33]
+                elif risk_level == 'medium':
+                    df = df[(df['Risk_Probability'] >= 0.33) & (df['Risk_Probability'] <= 0.66)]
+                elif risk_level == 'high':
+                    df = df[df['Risk_Probability'] > 0.66]
+
+            high_risk_table_html = df.to_html(classes='table table-bordered', index=False)
+
+    return render_template('alerts.html', high_risk_table_html=high_risk_table_html)
 
 
 
-@app.route('/predict/<filename>')
-def predict(filename):
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    try:
-        data = pd.read_csv(filepath)
-        # Asegúrate de aplicar el mismo preprocesamiento que usaste al entrenar los modelos
-        # ...
 
-        logistic_pred = logistic_model.predict(data)
-        random_forest_pred = random_forest_model.predict(data)
 
-        data['Logistic_Prediction'] = logistic_pred
-        data['RandomForest_Prediction'] = random_forest_pred
+@app.route('/predict', methods=['POST'])
+def predict():
+    if request.method == 'POST':
+        file = request.files['datafile']
+        if file and file.filename.endswith('.csv'):
+            df = pd.read_csv(file)
+            df_preprocessed = preprocessor.transform(df)  # Asegúrate de que el preprocesamiento es correcto
 
-        result_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'prediction_results.csv')
-        data.to_csv(result_filepath, index=False)
+            # Obtener probabilidades de riesgo cardiovascular
+            probabilities = logistic_model.predict_proba(df_preprocessed)
+            df['Risk_Probability'] = probabilities[:, 1]  # Probabilidad de alto riesgo
 
-        return send_file(result_filepath, as_attachment=True)
-    except Exception as e:
-        return f"Error processing the file: {e}"
+            # Filtrar para mostrar solo registros con alta probabilidad de riesgo
+            high_risk_df = df[df['Risk_Probability'] > 0.5]
+
+            # Convertir a HTML para mostrar en la página
+            high_risk_table_html = high_risk_df.to_html(classes='table table-bordered', index=False)
+            return render_template('alerts.html', high_risk_table_html=high_risk_table_html)
+    return redirect(url_for('index'))
+
+
+
+
 
 
 if __name__ == '__main__':
