@@ -9,11 +9,15 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
+    <!-- Incluir Engranaje-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
     <!-- Otros enlaces de estilo si son necesarios -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
-<body>
+<body >
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <!-- Menú lateral -->
@@ -75,16 +79,19 @@
 
             <!-- Contenido principal de Alerts -->
             <div class="col py-3">
-                <h1>Alerts</h1>
+                <h1>Alertas</h1>
+                <p>En esta página podrás cargar un archivo CSV con los datos de las personas que deseas clasificar y
+                    obtener un reporte con las personas que se encuentran en riesgo alto.</p>
+
                 <!-- Formulario modificado con botón de carga de archivos personalizado y botón de envío en español -->
-                <!-- En tu archivo alerts.html -->
                 <form action="{{ url_for('alerts') }}" method="post" enctype="multipart/form-data">
                     <div class="file-upload btn btn-primary">
                         <span>Seleccionar archivo</span>
                         <input type="file" name="datafile" class="file-input">
                     </div>
+                    <br><br> 
                     <!-- Menú desplegable para seleccionar nivel de riesgo -->
-                    <div class="mb-3">
+                    <div class="mb-3 col-md-4">
                         <label for="riskLevel" class="form-label">Nivel de Riesgo</label>
                         <select class="form-control" id="riskLevel" name="riskLevel">
                             <option value="all">Todos</option>
@@ -94,13 +101,62 @@
                         </select>
                     </div>
                     <input type="submit" value="Cargar y Clasificar" class="btn btn-success">
+
+                                        <!-- Icono de carga (oculto por defecto) -->
+                    <div id="loadingIcon" style="display: none;   font-size: 3em; color: #007bff; ">
+                        <i class="fas fa-cog fa-spin"></i> Prediciendo...
+                    </div>
+                    <!-- Icono de carga (oculto por defecto) -->
+
+
+
                 </form>
+                <br><br>    
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="card text-white bg-success mb-3">
+                                <div class="card-header">Riesgo Bajo</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ stats['low'] }} Personas</h5>
+                                    <p class="card-text">Cantidad de personas con riesgo bajo.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="card text-white bg-warning mb-3">
+                                <div class="card-header">Riesgo Medio</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ stats['medium'] }} Personas</h5>
+                                    <p class="card-text">Cantidad de personas con riesgo medio.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="card text-white bg-danger mb-3">
+                                <div class="card-header">Riesgo Alto</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ stats['high'] }} Personas</h5>
+                                    <p class="card-text">Cantidad de personas con riesgo alto.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                            <!-- Contenedores para los gráficos de tipo tacómetro -->
+                <div id="lowRiskGauge"></div>
+                <div id="mediumRiskGauge"></div>
+                <div id="highRiskGauge"></div>
+
+                
+                
 
 
 
 
                 <!-- Contenedor para el DataFrame (si lo necesitas) -->
-                <!-- Contenedor para el DataFrame de alto riesgo -->
                 {% if high_risk_table_html %}
                 <div class="dataframe-container">
                     {{ high_risk_table_html|safe }}
@@ -115,8 +171,21 @@
 
 
 
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    // Cuando el formulario se envíe, mostrar el icono de carga
+                    const form = document.querySelector('form');
+                    form.addEventListener('submit', function() {
+                        document.getElementById('loadingIcon').style.display = 'block';
+                    });
+                });
+            </script>
+            
 
 
 </body>
+
+
+
 
 </html>

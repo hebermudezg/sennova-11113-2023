@@ -307,6 +307,9 @@ def get_plot(plot_type):
 @app.route('/alerts', methods=['GET', 'POST'])
 def alerts():
     high_risk_table_html = None
+    # Inicializar estadísticas
+    stats = {'low': 0, 'medium': 0, 'high': 0}
+
     if request.method == 'POST':
         file = request.files.get('datafile')
         risk_level = request.form.get('riskLevel', 'all')
@@ -321,6 +324,11 @@ def alerts():
             probabilities = logistic_model.predict_proba(df_preprocessed)
             df['Risk_Probability'] = probabilities[:, 1]
 
+            # Calcular estadísticas
+            stats['low'] = len(df[df['Risk_Probability'] < 0.33])
+            stats['medium'] = len(df[(df['Risk_Probability'] >= 0.33) & (df['Risk_Probability'] <= 0.66)])
+            stats['high'] = len(df[df['Risk_Probability'] > 0.66])
+
             # Filtrar según el nivel de riesgo seleccionado
             if risk_level != 'all':
                 if risk_level == 'low':
@@ -331,8 +339,9 @@ def alerts():
                     df = df[df['Risk_Probability'] > 0.66]
 
             high_risk_table_html = df.to_html(classes='table table-bordered', index=False)
+    
 
-    return render_template('alerts.html', high_risk_table_html=high_risk_table_html)
+    return render_template('alerts.html', high_risk_table_html=high_risk_table_html, stats=stats)
 
 
 
