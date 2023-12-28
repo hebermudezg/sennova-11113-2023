@@ -1,3 +1,5 @@
+# Ignore clean data folder
+clean_data/
 
-raw_data/base de datos investigacion 2019-2023 HTA DM_2.txt
-raw_data/base de datos investigacion 2019-2023.txt
+# Ignore raw data folder
+raw_data/
