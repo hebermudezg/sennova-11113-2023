@@ -3,3 +3,6 @@ clean_data/
 
 # Ignore raw data folder
 raw_data/
+
+# Ignore sennova_virtualenv folder
+sennova_virtualenv/
