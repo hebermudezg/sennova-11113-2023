@@ -1,6 +1,9 @@
 # SENNOVA-11113-2023 Project
 
-Este proyecto contiene la aplicación y los recursos asociados para el análisis y predicción de datos en el marco del proyecto SENNOVA-11113-2023.
+This project comprises an application and related resources for analyzing and predicting epidemiological risk data, specifically designed to work with data from Metrosalud, a public health institution in Medellín focused on promoting healthy living and providing comprehensive health services. The project allows for the establishment of a structured database to make predictions about cardiovascular risk, including codes for a complete pipeline and all necessary development for the application.
+
+
+Este proyecto incluye una aplicación y los recursos relacionados para el análisis y la predicción de datos sobre riesgo epidemiológico. Contiene los códigos necesarios para configurar un pipeline completo, así como todo el código necesario para el desarrollo de la aplicación. Esta herramienta permite establecer una base de datos estructurada y realizar predicciones sobre el riesgo cardiovascular. El proyecto fue desarrollado específicamente para procesar y analizar los datos de Metrosalud, la red de salud más grande de Medellín.
 
 ## Estructura de Directorios
 
